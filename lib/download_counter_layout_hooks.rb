@@ -5,7 +5,7 @@ module DownloadCounterPlugin
         response = ''
         downloads = DownloadCounter.downloads_for(context[:project])
         if context[:project]
-          text = link_to("#{downloads.to_s} #{l(:download_counter_text_downloads)}", {
+          text = link_to("#{downloads.to_s} #{l(:download_counter_text_downloads, :count => downloads)}", {
                            :controller => 'projects',
                            :action => 'list_files',
                            :id => context[:project],
@@ -15,8 +15,8 @@ module DownloadCounterPlugin
                          )
 
         else
-          text = content_tag(:p, "#{downloads.to_s} #{l(:download_counter_text_downloads)}", :class => 'icon icon-package')
-        end      
+          text = content_tag(:p, "#{downloads.to_s} #{l(:download_counter_text_downloads, :count => downloads)}", :class => 'icon icon-package')
+        end
 
         response = content_tag(:div,
                                content_tag(:h3, l(:download_counter_text_download_counter)) + text,
@@ -24,7 +24,7 @@ module DownloadCounterPlugin
                                )
         return response
       end
-      
+
       def view_layouts_base_html_head(context={ })
         return <<EOCSS
         <style type="text/css">
@@ -36,3 +36,4 @@ EOCSS
     end
   end
 end
+
